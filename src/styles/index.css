@@ -694,6 +694,8 @@ select {
   justify-content: center;
   gap: 8px;
   margin: 6px 0 4px;
+  /* קוד החדר תמיד נקרא משמאל לימין, גם בממשק עברי */
+  direction: ltr;
 }
 .room-code .ch {
   width: clamp(38px, 9vw, 52px);

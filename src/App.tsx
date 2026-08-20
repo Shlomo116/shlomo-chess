@@ -808,6 +808,7 @@ export default function App() {
             <Lobby
               initialJoinCode={initialJoinCode}
               busy={busy}
+              suppressDialogs={waitingOpen}
               onCreateRoom={startOnlineHost}
               onJoinRoom={startOnlineJoin}
               onStartComputer={startComputer}

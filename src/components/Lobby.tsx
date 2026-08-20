@@ -18,6 +18,8 @@ export type LocalConfig = { timeControlId: string };
 type Props = {
   initialJoinCode?: string | null;
   busy?: boolean;
+  /** נסגר כשהאפליקציה פותחת חלון משלה (למשל "החדר מוכן") כדי שלא ייערמו שני דיאלוגים */
+  suppressDialogs?: boolean;
   onCreateRoom: (c: OnlineConfig) => void;
   onJoinRoom: (c: JoinConfig) => void;
   onStartComputer: (c: ComputerConfig) => void;
@@ -26,7 +28,15 @@ type Props = {
 
 type Dialog = null | 'online' | 'computer' | 'local';
 
-export function Lobby({ initialJoinCode, busy, onCreateRoom, onJoinRoom, onStartComputer, onStartLocal }: Props) {
+export function Lobby({
+  initialJoinCode,
+  busy,
+  suppressDialogs,
+  onCreateRoom,
+  onJoinRoom,
+  onStartComputer,
+  onStartLocal,
+}: Props) {
   const [dialog, setDialog] = useState<Dialog>(null);
   const [onlineTab, setOnlineTab] = useState<'create' | 'join'>('create');
 
@@ -38,6 +48,10 @@ export function Lobby({ initialJoinCode, busy, onCreateRoom, onJoinRoom, onStart
   const [engineColor, setEngineColor] = useState<'w' | 'b' | 'random'>('w');
   const [engineTc, setEngineTc] = useState('unlimited');
   const [localTc, setLocalTc] = useState('rapid10');
+
+  useEffect(() => {
+    if (suppressDialogs) setDialog(null);
+  }, [suppressDialogs]);
 
   useEffect(() => {
     if (initialJoinCode) {
